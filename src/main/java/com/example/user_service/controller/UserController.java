@@ -1,18 +1,29 @@
 package com.example.user_service.controller;
 
-import com.example.commons.annotation.Authenticate;
+import com.example.user_service.dto.UserDto;
+import com.example.user_service.model.User;
+import com.example.user_service.service.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.concurrent.CompletableFuture;
+
+@Slf4j
+@RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserController {
-    @GetMapping("/t")
-    @Authenticate
-    public ResponseEntity<String> getEnv(){
-        return ResponseEntity.ok("/t");
+
+    private final UserService userService;
+
+    @PostMapping("/createUser")
+    public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) {
+        log.info("creating user");
+        return ResponseEntity.status(201).body(CompletableFuture.supplyAsync(() -> userService.create(userDto)).join());
+
     }
+
 }
