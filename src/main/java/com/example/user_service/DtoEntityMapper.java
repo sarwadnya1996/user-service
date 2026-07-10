@@ -8,6 +8,9 @@ import com.example.user_service.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @RequiredArgsConstructor
 public class DtoEntityMapper {
@@ -22,14 +25,14 @@ public class DtoEntityMapper {
                 .password(userDto.getPassword())
                 .isActive(true)
                 .role("User").build();
-        user.addAddress(mapToAddress(userDto.getAddress()));
+        userDto.getAddress().stream().map(this::mapToAddress).forEach(user::addAddress);
         user.addContactDetail(ContactDetails.builder()
                 .mobileNumber(userDto.getMobileNumber())
                 .build());
         return user;
     }
 
-    private Address mapToAddress(AddressDto addressDto) {
+    public  Address mapToAddress(AddressDto addressDto) {
         return Address.builder()
                 .isDefaultShippingAddress(addressDto.getIsDefaultShippingAddress())
                 .isDefaultBillingAddress(addressDto.getIsDefaultBillingAddress())
@@ -50,12 +53,12 @@ public class DtoEntityMapper {
                         ? user.getContactDetails().getFirst().getMobileNumber()
                         : null)
                 .address(user.getAddresses() != null && !user.getAddresses().isEmpty()
-                        ? mapToAddressDto(user.getAddresses().get(0))
+                        ? user.getAddresses().stream().map(this::mapToAddressDto).collect(Collectors.toList())
                         : null)
                 .build();
     }
 
-    private AddressDto mapToAddressDto(Address address) {
+    public AddressDto mapToAddressDto(Address address) {
         return AddressDto.builder()
                 .userId(address.getUser() != null ? address.getUser().getUserId() : 0L)
                 .addressId(address.getAddressId())

@@ -2,8 +2,7 @@ package com.example.user_service.controller;
 
 import com.example.commons.annotation.Authenticate;
 import com.example.user_service.dto.UserDto;
-import com.example.user_service.model.User;
-import com.example.user_service.service.UserService;
+import com.example.user_service.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @PostMapping("/createUser")
     public ResponseEntity<UserDto> createUser(@RequestBody @Valid UserDto userDto) {
