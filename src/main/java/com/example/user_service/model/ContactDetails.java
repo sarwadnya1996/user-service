@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class ContactDetails extends AuditableEntity{
     @Id

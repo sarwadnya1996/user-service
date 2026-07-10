@@ -10,7 +10,7 @@ import org.hibernate.sql.results.graph.Fetch;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@ToString(callSuper = true)
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class Address extends AuditableEntity {
     @Id

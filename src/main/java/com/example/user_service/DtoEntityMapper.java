@@ -6,16 +6,13 @@ import com.example.user_service.model.Address;
 import com.example.user_service.model.ContactDetails;
 import com.example.user_service.model.User;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class DtoEntityMapper {
-    private  final ModelMapper modelMapper;
+
+
 
     public User mapToUser(UserDto userDto){
         User user= User.builder()
@@ -44,7 +41,7 @@ public class DtoEntityMapper {
     }
     public UserDto mapToUserDto(User user) {
         return UserDto.builder()
-                .userId(user.getUser_id())
+                .userId(user.getUserId())
                 .userName(user.getUserName())
                 .fullName(user.getFullName())
                 .email(user.getEmailId())
@@ -60,7 +57,7 @@ public class DtoEntityMapper {
 
     private AddressDto mapToAddressDto(Address address) {
         return AddressDto.builder()
-                .userId(address.getUser() != null ? address.getUser().getUser_id() : 0L)
+                .userId(address.getUser() != null ? address.getUser().getUserId() : 0L)
                 .addressId(address.getAddressId())
                 .streetAddress(address.getStreetAddress())
                 .city(address.getCity())

@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -13,13 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@ToString(callSuper = true)
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class User extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="USER_ID")
-    private Long user_id;
+    private Long userId;
 
     @Column(name = "USER_NAME", unique = true, nullable = false)
     private String userName;

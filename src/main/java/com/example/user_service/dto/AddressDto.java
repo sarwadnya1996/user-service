@@ -1,6 +1,7 @@
 package com.example.user_service.dto;
 
 import com.example.user_service.model.AddressType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AddressDto {
+    @JsonIgnore
     private Long userId;
     private Long addressId;
     private String streetAddress;
