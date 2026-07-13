@@ -38,6 +38,7 @@ public class DtoEntityMapper {
                 .isDefaultBillingAddress(addressDto.getIsDefaultBillingAddress())
                 .streetAddress(addressDto.getStreetAddress())
                 .city(addressDto.getCity())
+                .addressId(addressDto.getAddressId())
                 .postalCode(addressDto.getPostalCode()).
                 type(addressDto.getType())
                 .build();

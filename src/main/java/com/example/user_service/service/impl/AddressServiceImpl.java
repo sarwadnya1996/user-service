@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
@@ -25,5 +28,23 @@ public class AddressServiceImpl implements AddressService {
         address.setUser(existing);
         Address newAddress=addressRepository.save(address);
         return mapper.mapToAddressDto(newAddress);
+    }
+
+    @Override
+    public List<AddressDto> retrieveAddresses() {
+        List<Address> allAddresses= addressRepository.findAll();
+        return allAddresses.stream().map(mapper::mapToAddressDto).toList();
+    }
+
+    @Override
+    public AddressDto update(AddressDto addressDto) {
+        Optional<User> existing = userRepository.findUserByUserId(addressDto.getUserId());
+        if(existing.isEmpty()){
+            throw new UserSystemException("User does not exist",HttpStatus.NOT_FOUND);
+        }
+        Address updateAddress= mapper.mapToAddress(addressDto);
+        updateAddress.setUser(existing.get());
+       return  mapper.mapToAddressDto(addressRepository.save(updateAddress));
+
     }
 }
