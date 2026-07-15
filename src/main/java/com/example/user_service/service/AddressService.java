@@ -10,4 +10,6 @@ public interface AddressService {
     List<AddressDto> retrieveAddresses();
 
     AddressDto update(AddressDto addressDto);
+
+    void delete(Long addressId);
 }

@@ -8,6 +8,7 @@ import com.example.user_service.model.User;
 import com.example.user_service.repository.AddressRepository;
 import com.example.user_service.repository.UserRepository;
 import com.example.user_service.service.AddressService;
+import jakarta.transaction.SystemException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,19 @@ public class AddressServiceImpl implements AddressService {
             throw new UserSystemException("User does not exist",HttpStatus.NOT_FOUND);
         }
         Address updateAddress= mapper.mapToAddress(addressDto);
+
         updateAddress.setUser(existing.get());
+        mapper.setAuditFields(updateAddress);
        return  mapper.mapToAddressDto(addressRepository.save(updateAddress));
+
+    }
+
+    @Override
+    public void delete(Long addressId) {
+        Optional<Address> optionalAddress =addressRepository.findById(addressId);
+        Address existing =optionalAddress.orElseThrow(()->new UserSystemException("Invalid Address",HttpStatus.BAD_GATEWAY));
+        existing.setIsActive(false);
+        addressRepository.save(existing);
 
     }
 }

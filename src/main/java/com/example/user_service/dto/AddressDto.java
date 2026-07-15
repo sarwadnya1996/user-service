@@ -21,8 +21,10 @@ public class AddressDto {
     private String city;
     @NotNull
     private String postalCode;
-    private Boolean  isDefaultShippingAddress;
+    private Boolean isDefaultShippingAddress;
     private Boolean isDefaultBillingAddress;
     @NotNull
     private AddressType type;
+    @Builder.Default
+    private Boolean isActive = true;
 }

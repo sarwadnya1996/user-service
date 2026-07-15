@@ -8,7 +8,7 @@ import com.example.user_service.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,6 +41,7 @@ public class DtoEntityMapper {
                 .addressId(addressDto.getAddressId())
                 .postalCode(addressDto.getPostalCode()).
                 type(addressDto.getType())
+                .isActive(addressDto.getIsActive())
                 .build();
     }
     public UserDto mapToUserDto(User user) {
@@ -68,7 +69,13 @@ public class DtoEntityMapper {
                 .postalCode(address.getPostalCode())
                 .isDefaultShippingAddress(address.getIsDefaultShippingAddress())
                 .isDefaultBillingAddress(address.getIsDefaultBillingAddress())
+                .isActive(address.getIsActive())
                 .type(address.getType())
                 .build();
+    }
+
+    public void setAuditFields(Address updateAddress) {
+        updateAddress.setUpdatedAt(LocalDate.now().toString());
+        updateAddress.setUpdatedBy(updateAddress.getUser().getUserName());
     }
 }
